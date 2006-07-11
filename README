@@ -1,0 +1,59 @@
+DESCRIPTION
+
+  This module determines whether an email address is well-formed, and
+  optionally, whether a mail host exists for the domain or whether
+  the top level domain of the email address is valid.  
+
+COPYRIGHT
+
+  Copyright 1998-2003, Maurice Aubrey <maurice@hevanet.com>. 
+  All rights reserved.
+
+  This module is free software; you may redistribute it and/or
+  modify it under the same terms as Perl itself.
+
+PREREQUISITES
+
+  This module requires perl 5.004 or later and the Mail::Address module.
+  The Net::DNS module is required for DNS checks.   
+
+  Either the Net::DNS module or the nslookup utility are required 
+  to perform DNS checks.
+
+  The Net::Domain::TLD module is required to check validity of top level
+  domains.
+
+  Under Win32, the module tests take a very long time, so be patient.
+ 
+INSTALLATION
+
+  To install this module, move into the directory where this file is
+  located and type the following:
+
+        perl Makefile.PL
+        make
+        make test
+        make install
+
+  This will install the module into the Perl library directory.  If 
+  you lack sufficient privileges for this, then you can specify an
+  alternate directory like this:
+
+        perl Makefile.PL PREFIX=/where/I/want/it/put
+        make
+        make test
+        make install
+
+  Once installed, you can use the following line to load the module into
+  your scripts:
+
+        use Email::Valid;
+
+  If you installed the module into an alternative directory, you will
+  need to let Perl know where it can be found:
+
+        use lib "/path/to/my/modules";
+        use Email::Valid;
+
+  See the POD documentation for further details.
+
