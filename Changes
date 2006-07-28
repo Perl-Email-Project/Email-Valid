@@ -1,5 +1,9 @@
 Revision history for Perl extension Email::Valid.
 
+0.176   Thu Jul 27 2006
+        further improve DNS stuff: try to make Net::DNS a prereq if we think
+        we'll need it later
+
 0.175   Sat Jun 24 2006
         attempt to improve nslookup-location on Cygwin
 
