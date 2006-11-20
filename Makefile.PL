@@ -1,4 +1,3 @@
-#!perl
 use strict;
 use warnings;
 
@@ -22,6 +21,7 @@ unless ($need_net_dns) {
 WriteMakefile(
     'NAME'	   => 'Email::Valid',
     'VERSION_FROM' => 'lib/Email/Valid.pm', 
+    (eval { ExtUtils::MakeMaker->VERSION(6.21) } ? (LICENSE => 'perl'), : ()),
     'PREREQ_PM'    => {
       'Mail::Address' => 0,
       ($need_net_dns ? ('Net::DNS' => 0) : ()),
