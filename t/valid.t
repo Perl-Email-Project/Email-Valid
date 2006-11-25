@@ -1,7 +1,7 @@
 #!perl
 use strict;
 
-use Test::More tests => 16;
+use Test::More tests => 19;
 
 BEGIN {
   use_ok('Email::Valid');
@@ -57,6 +57,21 @@ ok(
 ok(
   $v->address(-address => '-dashy@example.net'),
   'an email can start with a dash (alternate calling method)',
+);
+
+ok(
+  ! $v->address(-address => 'dashy@-example.net', -fqdn => 1),
+  'but a domain cannot',
+);
+
+ok(
+  ! $v->address(-address => 'dashy@example.net-', -fqdn => 1),
+  'a domain cannot end with a dash either',
+);
+
+ok(
+  $v->address(-address => 'dashy@a--o.example.net', -fqdn => 1),
+  'but a domain may contain two dashes in a row in the middle',
 );
 
 SKIP: {

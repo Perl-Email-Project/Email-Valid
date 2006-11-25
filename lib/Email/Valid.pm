@@ -9,7 +9,7 @@ use IO::File;
 use Mail::Address;
 use File::Spec;
 
-$VERSION = '0.176';
+$VERSION = '0.177';
 
 %AUTOLOAD = (
   fqdn     => 1,
@@ -88,7 +88,7 @@ sub rfc822 {
   my %args = $self->_rearrange([qw( address )], \@_);
 
   my $addr = $args{address} or return $self->details('rfc822');
-  $addr = $addr->address if UNIVERSAL::isa($addr, 'Mail::Address');
+  $addr = $addr->address if eval { $addr->isa('Mail::Address') };
 
   return $self->details('rfc822') unless $addr =~ m/^$RFC822PAT$/o;
 
@@ -219,7 +219,7 @@ sub _host {
   my $self = shift;
   my $addr = shift;
 
-  $addr = $addr->address if UNIVERSAL::isa($addr, 'Mail::Address');
+  $addr = $addr->address if eval { $addr->isa('Mail::Address') };
 
   my $host = ($addr =~ /^.*@(.*)$/ ? $1 : $addr);
   $host =~ s/\s+//g;
@@ -264,6 +264,31 @@ sub _local_rules {
   1;  
 }
 
+sub _valid_domain_parts {
+  my ($self, $string) = @_;
+
+  return unless $string and length $string <= 255;
+  return if $string =~ /\.\./;
+  my @labels = split /\./, $string;
+
+  for my $label (@labels) {
+    return 0 unless $self->_is_domain_label($label);
+  }
+  return scalar @labels;
+}
+
+sub _is_domain_label {
+  my ($self, $string) = @_;
+  return unless $string =~ /\A
+    [A-Z0-9]          # must start with an alnum
+    (?:
+      [-A-Z0-9]+      # then maybe a dash or alnum
+      [A-Z0-9]        # finally ending with an alnum
+    )*                # lather, rinse, repeat
+  \z/ix;
+  return 1;
+}
+
 # Purpose: Put an address through a series of checks to determine 
 #          whether it should be considered valid.
 sub address {
@@ -272,7 +297,7 @@ sub address {
                                     local_rules )], \@_);
 
   my $addr = $args{address} or return $self->details('rfc822');
-  $addr = $addr->address if UNIVERSAL::isa($addr, 'Mail::Address');
+  $addr = $addr->address if eval { $addr->isa('Mail::Address') };
 
   $addr = $self->_fudge( $addr ) if $args{fudge};
   $self->rfc822( -address => $addr ) or return undef;
@@ -287,7 +312,8 @@ sub address {
   }
 
   if ($args{fqdn}) {
-    $addr->host =~ /^.+\..+$/ or return $self->details('fqdn');
+    $self->_valid_domain_parts($addr->host) > 1
+      or return $self->details('fqdn');
   }
 
   if ($args{mxcheck}) {

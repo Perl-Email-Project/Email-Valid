@@ -1,5 +1,10 @@
 Revision history for Perl extension Email::Valid.
 
+0.177   Sat Nov 25 2006
+        resolve bug 22710: make fqdn rule more strict: domains must be multiple
+          valid domain labels, and domain labels must be [a-z0-9][-a-z0-9]*
+        replace UNIVERSAL:: with eval{}-wrapping
+
 0.176   Thu Jul 27 2006
         further improve DNS stuff: try to make Net::DNS a prereq if we think
         we'll need it later
