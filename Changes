@@ -1,5 +1,9 @@
 Revision history for Perl extension Email::Valid.
 
+0.178   Sat Nov 25 2006
+        reduce cases in which IO::CaptureOutput is needed on Win32
+        (bug 22062, thanks Alexandr Ciornii)
+
 0.177   Sat Nov 25 2006
         resolve bug 22710: make fqdn rule more strict: domains must be multiple
           valid domain labels, and domain labels must be [a-z0-9][-a-z0-9]*

@@ -9,7 +9,7 @@ use IO::File;
 use Mail::Address;
 use File::Spec;
 
-$VERSION = '0.177';
+$VERSION = '0.178';
 
 %AUTOLOAD = (
   fqdn     => 1,
