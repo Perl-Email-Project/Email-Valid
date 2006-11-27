@@ -1,0 +1,111 @@
+Revision history for Perl extension Email::Valid.
+
+0.179   Mon Nov 27 2006
+        bug 23657: fix domain label regex: thanks, Nobuaki ITO!
+
+0.178   Sat Nov 25 2006
+        reduce cases in which IO::CaptureOutput is needed on Win32
+        (bug 22062, thanks Alexandr Ciornii)
+
+0.177   Sat Nov 25 2006
+        resolve bug 22710: make fqdn rule more strict: domains must be multiple
+          valid domain labels, and domain labels must be [a-z0-9][-a-z0-9]*
+        replace UNIVERSAL:: with eval{}-wrapping
+
+0.176   Thu Jul 27 2006
+        further improve DNS stuff: try to make Net::DNS a prereq if we think
+        we'll need it later
+
+0.175   Sat Jun 24 2006
+        attempt to improve nslookup-location on Cygwin
+
+0.174   Fri Jun 17 2006
+        added module required on Win32 (IO::CaptureOutput) to Makefile.PL
+
+0.173   Fri Jun 17 2006
+        update test to require same min. version of TLD.pm as code
+
+0.172   Sat Jun 10 2006
+        add pod tests
+
+0.171   Sat Jun 10 2006
+        fixed a problem with the test plan
+
+0.170   Thu Jun  8 2006
+        fix details on failures for mxcheck and tldcheck
+        don't screw up addresses beginning with a dash
+        try to work on win32 where forking open is busted (thanks Smylers)
+        improve tests
+
+0.16    Fri Jun  2 2006
+        maintainership assumed by RJBS
+        work with current, broken Net::Domain::TLD
+        improve tests
+
+
+0.15    Sun Sep  7 21:39:12 PDT 2003
+        Support for top level domain validity check added by Elizabeth
+          Mattijsen (liz@dijkmat.nl).  Updated documentation and added tests.
+        Patch to improve portability when looking for nslookup executable.
+          Thanks to Chromatic<chromatic@wgz.org>
+        Update AOL rules in local_rules check thanks to Paul Fierro
+          <pablo@nothing.com>
+
+0.14    Wed Jul  3 12:58:50 CEST 2002
+        Applied patch from Michael G Schwern <schwern@pobox.com> to remove 'use
+          UNIVERSAL'.
+   
+0.13    Tue Jan 16 13:25:57 PST 2001    
+        Only load Net::DNS module if required
+
+0.12    Thu Jul  8 22:26:41 PDT 1999
+        Added details() method to determine why an address check fails.
+          Thanks to Otis Gospodnetic for the suggestion.      
+        Global Net::DNS::Resolver object is now used for DNS queries when
+          Net::DNS is available.  Can be accessed directly to tweak the
+          resolver behavior.
+        The address() method now returns an additional value (an instance of
+          the Mail::Address class) when called in a list context.  
+        Updated documentation.
+
+0.11    Wed Jul  7 04:33:58 PDT 1999  
+        Changed name to Mail::Address
+        RELEASE WITHDRAWN PENDING DISCUSSION OF THIS NAME CHANGE
+
+0.09    Thu Apr  8 17:21:15 PDT 1999
+        Added Mail::Address to PREREQ_PM to list dependency, as suggested by
+          Achim.
+        Moved test.pl to t/valid.t as suggested by Achim.
+        DNS lookups now use Net::DNS if available, falling back to nslookup if
+          not.  Suggested by Lupe Christoph.
+        Modified documentation
+        Renamed Email::Valid::NSLookup to Email::Valid::DNS, which is now
+          responsible for all DNS queries.
+        
+0.08
+	      Removed a couple of warnings when running under -w
+        Bug handling AOL local rules fixed
+        local_rules() now defaults to off
+
+0.07    Tue Jan 12 02:04:57 PST 1999
+        Mail::Address module is now required
+        Added Email::Valid::NSLookup module to encapsulate DNS lookups -- now
+          we can add additional classes to use other utilities.
+        Fixed problem with spaces thanks to David Birnbaum.
+        Renamed a couple of the parameters -- old names should still work.
+
+0.06    Tue May 26 14:27:34 1998
+        Modified named parameter parsing
+
+0.05    Mon May 11 00:56:00 1998
+        fudge() now defaults to false
+        Modified documentation
+        Changed behavior of fully_qualified
+
+0.04    Thu May  7 16:42:00 1998
+        Added support for Mail::Address objects
+        Added positional/named parameter calling style
+        Updated documentation
+
+0.01    Fri Mar  6 22:19:54 1998
+        original version; created by h2xs 1.18      

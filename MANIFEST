@@ -1,0 +1,9 @@
+Changes
+lib/Email/Valid.pm
+README
+MANIFEST
+Makefile.PL
+t/valid.t
+t/pod.t
+t/pod-coverage.t
+LICENSE
