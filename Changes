@@ -1,5 +1,8 @@
 Revision history for Perl extension Email::Valid.
 
+0.179   Mon Nov 27 2006
+        bug 23657: fix domain label regex: thanks, Nobuaki ITO!
+
 0.178   Sat Nov 25 2006
         reduce cases in which IO::CaptureOutput is needed on Win32
         (bug 22062, thanks Alexandr Ciornii)

@@ -9,7 +9,7 @@ use IO::File;
 use Mail::Address;
 use File::Spec;
 
-$VERSION = '0.178';
+$VERSION = '0.179';
 
 %AUTOLOAD = (
   fqdn     => 1,
@@ -282,9 +282,9 @@ sub _is_domain_label {
   return unless $string =~ /\A
     [A-Z0-9]          # must start with an alnum
     (?:
-      [-A-Z0-9]+      # then maybe a dash or alnum
+      [-A-Z0-9]*      # then maybe a dash or alnum
       [A-Z0-9]        # finally ending with an alnum
-    )*                # lather, rinse, repeat
+    )?                # lather, rinse, repeat
   \z/ix;
   return 1;
 }

@@ -1,7 +1,7 @@
 #!perl
 use strict;
 
-use Test::More tests => 19;
+use Test::More tests => 21;
 
 BEGIN {
   use_ok('Email::Valid');
@@ -72,6 +72,16 @@ ok(
 ok(
   $v->address(-address => 'dashy@a--o.example.net', -fqdn => 1),
   'but a domain may contain two dashes in a row in the middle',
+);
+
+ok(
+  $v->address(-address => 'dashy@ao.example.net', -fqdn => 1),
+  'and of course two-character labels are valid!',
+);
+
+ok(
+  $v->address(-address => 'dashy@a.a.example.net', -fqdn => 1),
+  'onesies, too',
 );
 
 SKIP: {
