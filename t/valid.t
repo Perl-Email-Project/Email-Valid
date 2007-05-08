@@ -96,7 +96,7 @@ SKIP: {
   ok(
     !$v->address(-address => 'blort@will-never-exist.pobox.com', -mxcheck => 1),
     'blort@will-never-exist.pobox.com, with mxcheck, is invalid',
-  );
+  ) or diag "was using $Email::Valid::DNS_Method for dns resolution";
 }
 
 SKIP: {

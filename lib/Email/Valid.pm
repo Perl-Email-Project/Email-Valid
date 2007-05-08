@@ -44,7 +44,7 @@ sub _initialize {
   $self->{fqdn}        = 1;
   $self->{local_rules} = 0;
   $self->{details}     = $Details = undef;
-}            
+}
 
 # Pupose: handles named parameter calling style
 sub _rearrange {
@@ -55,7 +55,7 @@ sub _rearrange {
 
   ref $self ? %args = %$self : _initialize( \%args );
   return %args unless @params;
-  
+
   unless ($params[0] =~ /^-/ and @params > 1) {
     while(@params) {
       croak 'unexpected number of parameters' unless @names;
@@ -98,7 +98,7 @@ sub rfc822 {
 # Purpose: attempt to locate the nslookup utility 
 sub _find_nslookup {
   my $self = shift;
- 
+
   my $ns = 'nslookup';
   foreach my $path (@NSLOOKUP_PATHS) {
     my $file = File::Spec->catfile($path, $ns);
@@ -113,7 +113,7 @@ sub _select_dns_method {
   # if Net::DNS is available
   eval { require Net::DNS };
   return $DNS_Method = 'Net::DNS' unless $@;
- 
+
   $DNS_Method = 'nslookup';
 }
 
@@ -126,10 +126,10 @@ sub _net_dns_query {
 
   my $packet = $Resolver->send($host, 'A') or croak $Resolver->errorstring;
   return 1 if $packet->header->ancount;
- 
+
   $packet = $Resolver->send($host, 'MX') or croak $Resolver->errorstring;
   return 1 if $packet->header->ancount;
- 
+
   return $self->details('mx');               
 }
 
@@ -223,7 +223,7 @@ sub _host {
 
   my $host = ($addr =~ /^.*@(.*)$/ ? $1 : $addr);
   $host =~ s/\s+//g;
- 
+
   # REMOVE BRACKETS IF IT'S A DOMAIN-LITERAL
   #   RFC822 3.4.6
   #   Square brackets ("[" and "]") are used to indicate the
