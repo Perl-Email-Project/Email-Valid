@@ -1,5 +1,8 @@
 Revision history for Perl extension Email::Valid.
 
+0.180     2009-01-16
+          add repo location to metadata
+
 0.179   Mon Nov 27 2006
         bug 23657: fix domain label regex: thanks, Nobuaki ITO!
 
