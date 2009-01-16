@@ -32,7 +32,7 @@ WriteMakefile(
     },
 
     'dist'         => { 'COMPRESS'=>'gzip -9f', 'SUFFIX' => 'gz',
-                        'ZIP'=>'/usr/bin/zip', 'ZIPFLAGS'=>'-rl' }
+                        'ZIP'=>'/usr/bin/zip', 'ZIPFLAGS'=>'-rl' },
 
     (eval { ExtUtils::MakeMaker->VERSION(6.46) }
       ? (META_MERGE => {
