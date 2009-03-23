@@ -1,5 +1,10 @@
 Revision history for Perl extension Email::Valid.
 
+0.181     2009-03-23
+          explicitly require perl5 version 6
+          update some module metadata (Alexandr Ciornii)
+          remove hateful indirect method notation (Alexandr Ciornii)
+
 0.180     2009-01-16
           add repo location to metadata
 

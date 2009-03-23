@@ -1,3 +1,5 @@
+require 5.006;
+
 use strict;
 use warnings;
 
@@ -21,6 +23,7 @@ unless ($need_net_dns) {
 WriteMakefile(
     'NAME'	   => 'Email::Valid',
     'VERSION_FROM' => 'lib/Email/Valid.pm', 
+    MIN_PERL_VERSION => '5.006',
     (eval { ExtUtils::MakeMaker->VERSION(6.21) } ? (LICENSE => 'perl') : ()),
     'PREREQ_PM'    => {
       'Test::More' => 0,
@@ -40,7 +43,6 @@ WriteMakefile(
           resources => {
             repository => 'http://github.com/rjbs/email-valid'
           },
-          keywords => ['e-mail', 'email', 'validation'],
         })
       : ()
     ),
