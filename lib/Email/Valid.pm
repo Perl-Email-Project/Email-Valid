@@ -160,7 +160,7 @@ sub _nslookup_query {
     return 1;
   } else {
     # phew, we're not on Windows!
-    if (my $fh = new IO::File '-|') {
+    if (my $fh = IO::File->new('-|')) {
       my $response = <$fh>;
       print STDERR $response if $Debug;
       close $fh;
