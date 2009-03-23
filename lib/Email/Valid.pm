@@ -1,9 +1,11 @@
 package Email::Valid;
-
+require 5.006;
 use strict;
+use warnings;
 use vars qw( $VERSION $RFC822PAT %AUTOLOAD $AUTOLOAD $NSLOOKUP_PAT
              @NSLOOKUP_PATHS $Details $Resolver $Nslookup_Path 
              $DNS_Method $TLD $Debug );
+
 use Carp;
 use IO::File;
 use Mail::Address;
