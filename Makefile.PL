@@ -39,7 +39,8 @@ WriteMakefile(
       ? (META_MERGE => {
           resources => {
             repository => 'http://github.com/rjbs/email-valid'
-          }
+          },
+          keywords => ['e-mail', 'email', 'validation'],
         })
       : ()
     ),
