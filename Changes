@@ -1,5 +1,8 @@
 Revision history for Perl extension Email::Valid.
 
+0.182     2009-08-03
+          skip DNS tests on machines with lying DNS
+
 0.181     2009-03-23
           explicitly require perl5 version 6
           update some module metadata (Alexandr Ciornii)
