@@ -13,7 +13,7 @@ use File::Spec;
 
 use bytes;
 
-$VERSION = '0.182';
+$VERSION = '0.183_001';
 
 %AUTOLOAD = (
   fqdn     => 1,
