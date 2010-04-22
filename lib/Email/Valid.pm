@@ -39,6 +39,20 @@ sub new {
   return $self;
 }
 
+sub import {
+    my $class = shift;
+
+    # initialize DNS_Method if necessary
+    unless ($DNS_Method) {
+        $class->_select_dns_method;
+    }
+
+    # initialize $Resolver if necessary
+    if ($DNS_Method eq 'Net::DNS') {
+        $Resolver = Net::DNS::Resolver->new unless defined $Resolver;
+    }
+}
+
 sub _initialize {
   my $self = shift;
 
