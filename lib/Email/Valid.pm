@@ -28,6 +28,16 @@ $NSLOOKUP_PAT = 'preference|serial|expire|mail\s+exchanger';
 
 # initialize if already loaded, better in prefork mod_perl environment
 $DNS_Method = defined $Net::DNS::VERSION ? 'Net::DNS' : '';
+unless ($DNS_Method) {
+    __PACKAGE__->_select_dns_method;
+}
+
+# initialize $Resolver if necessary
+if ($DNS_Method eq 'Net::DNS') {
+    unless (defined $Resolver) {
+        $Resolver = Net::DNS::Resolver->new;
+    }
+}
 
 sub new {
   my $class   = shift;
@@ -37,20 +47,6 @@ sub new {
   $self->_initialize;
   %$self = $self->_rearrange([ keys %AUTOLOAD ], \@_);
   return $self;
-}
-
-sub import {
-    my $class = shift;
-
-    # initialize DNS_Method if necessary
-    unless ($DNS_Method) {
-        $class->_select_dns_method;
-    }
-
-    # initialize $Resolver if necessary
-    if ($DNS_Method eq 'Net::DNS') {
-        $Resolver = Net::DNS::Resolver->new unless defined $Resolver;
-    }
 }
 
 sub _initialize {
