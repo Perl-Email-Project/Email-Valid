@@ -1,5 +1,9 @@
 Revision history for Perl extension Email::Valid.
 
+0.184     2010-06-10
+          initialize Net::DNS resolver earlier
+          (address RT #56828, thanks mschout @ github)
+
 0.183_001 2009-10-05
           reject addresses with any octets that are &128
           (address RT #50230, thanks Adriano Ferreira and Graham Barr)
