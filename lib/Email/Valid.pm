@@ -3,7 +3,7 @@ require 5.006;
 use strict;
 use warnings;
 use vars qw( $VERSION $RFC822PAT %AUTOLOAD $AUTOLOAD $NSLOOKUP_PAT
-             @NSLOOKUP_PATHS $Details $Resolver $Nslookup_Path 
+             @NSLOOKUP_PATHS $Details $Resolver $Nslookup_Path
              $DNS_Method $TLD $Debug );
 
 use Carp;
@@ -84,7 +84,7 @@ sub _rearrange {
   }
 
   %args;
-}                         
+}
 
 # Purpose: determine why an address failed a check
 sub details {
@@ -109,7 +109,7 @@ sub rfc822 {
   return 1;
 }
 
-# Purpose: attempt to locate the nslookup utility 
+# Purpose: attempt to locate the nslookup utility
 sub _find_nslookup {
   my $self = shift;
 
@@ -120,7 +120,7 @@ sub _find_nslookup {
     return $file if -x $file and !-d _;
   }
   return undef;
-}               
+}
 
 sub _select_dns_method {
   # Configure a global resolver object for DNS queries
@@ -136,7 +136,7 @@ sub _net_dns_query {
   my $self = shift;
   my $host = shift;
 
-  $Resolver = Net::DNS::Resolver->new unless defined $Resolver; 
+  $Resolver = Net::DNS::Resolver->new unless defined $Resolver;
 
   my $packet = $Resolver->send($host, 'A') or croak $Resolver->errorstring;
   return 1 if $packet->header->ancount;
@@ -144,7 +144,7 @@ sub _net_dns_query {
   $packet = $Resolver->send($host, 'MX') or croak $Resolver->errorstring;
   return 1 if $packet->header->ancount;
 
-  return $self->details('mx');               
+  return $self->details('mx');
 }
 
 # Purpose: perform DNS query using the nslookup utility
@@ -188,7 +188,7 @@ sub _nslookup_query {
       }
       open STDERR, ">&OLDERR";
       croak "unable to execute nslookup '$Nslookup_Path': $!";
-    }                                                                             
+    }
   }
 }
 
@@ -204,7 +204,7 @@ sub tld {
   my $host = $self->_host( $args{address} or return $self->details('tld') );
   my ($tld) = $host =~ m#\.(\w+)$#;
   return Net::Domain::TLD::tld_exists($tld);
-} 
+}
 
 # Purpose: Check whether a DNS record (A or MX) exists for a domain.
 sub mx {
@@ -244,7 +244,7 @@ sub _host {
   #   presence of a domain-literal, which the appropriate
   #   name-domain is to use directly, bypassing normal
   #   name-resolution mechanisms.
-  $host =~ s/(^\[)|(\]$)//g;              
+  $host =~ s/(^\[)|(\]$)//g;
   $host;
 }
 
@@ -260,7 +260,7 @@ sub _fudge {
 }
 
 # Purpose: Special address restrictions on a per-domain basis.
-# Caveats: These organizations may change their rules at any time.  
+# Caveats: These organizations may change their rules at any time.
 sub _local_rules {
   my $self = shift;
   my($user, $host) = @_;
@@ -275,7 +275,7 @@ sub _local_rules {
   if ($host =~ /aol\.com/i) {
     return undef unless $user =~ /^[a-zA-Z][a-zA-Z0-9]{2,15}$/;
   }
-  1;  
+  1;
 }
 
 sub _valid_domain_parts {
@@ -303,11 +303,11 @@ sub _is_domain_label {
   return 1;
 }
 
-# Purpose: Put an address through a series of checks to determine 
+# Purpose: Put an address through a series of checks to determine
 #          whether it should be considered valid.
 sub address {
   my $self = shift;
-  my %args = $self->_rearrange([qw( address fudge mxcheck tldcheck fqdn  
+  my %args = $self->_rearrange([qw( address fudge mxcheck tldcheck fqdn
                                     local_rules )], \@_);
 
   my $addr = $args{address} or return $self->details('rfc822');
@@ -321,7 +321,7 @@ sub address {
   $addr or return $self->details('rfc822'); # This should never happen
 
   if ($args{local_rules}) {
-    $self->_local_rules( $addr->user, $addr->host ) 
+    $self->_local_rules( $addr->user, $addr->host )
       or return $self->details('local_rules');
   }
 
@@ -340,7 +340,7 @@ sub address {
     $self->tld( $addr->host ) or return $self->details('tldcheck');
   }
 
-  return (wantarray ? ($addr->address, $addr) : $addr->address);  
+  return (wantarray ? ($addr->address, $addr) : $addr->address);
 }
 
 sub AUTOLOAD {
@@ -353,7 +353,7 @@ sub AUTOLOAD {
   die "unknown autoload name '$name'" unless $AUTOLOAD{$name};
 
   return (@_ ? $self->{$name} = shift : $self->{$name});
-}               
+}
 
 # Regular expression built using Jeffrey Friedl's example in
 # _Mastering Regular Expressions_ (http://www.ora.com/catalog/regexp/).
@@ -464,7 +464,7 @@ __END__
 
 =head1 NAME
 
-Email::Valid - Check validity of Internet email addresses 
+Email::Valid - Check validity of Internet email addresses
 
 =head1 SYNOPSIS
 
@@ -522,7 +522,7 @@ DNS checks.  Using Net::DNS is the preferred method since error
 handling is improved.  If Net::DNS is available, you can modify
 the behavior of the resolver (e.g. change the default tcp_timeout
 value) by manipulating the global Net::DNS::Resolver instance stored in
-$Email::Valid::Resolver.     
+$Email::Valid::Resolver.
 
 =item tld ( <ADDRESS> )
 
@@ -565,7 +565,7 @@ for a valid top level domains.  The default is false.
 
 =item address ( <ADDRESS> )
 
-This is the primary method which determines whether an email 
+This is the primary method which determines whether an email
 address is valid.  It's behavior is modified by the values of
 mxcheck(), tldcheck(), local_rules(), fqdn(), and fudge().  If the address
 passes all checks, the (possibly modified) address is returned as
@@ -581,11 +581,11 @@ method to determine why it failed.  Possible values are:
  rfc822
  local_rules
  fqdn
- mxcheck  
+ mxcheck
  tldcheck
 
 If the class is not instantiated, you can get the same information
-from the global $Email::Valid::Details.  
+from the global $Email::Valid::Details.
 
 =back
 
@@ -604,7 +604,7 @@ Additionally, let's make sure there's a mail host for it:
 Let's see an example of how the address may be modified:
 
   $addr = Email::Valid->address('Alfred Neuman <Neuman @ foo.bar>');
-  print "$addr\n"; # prints Neuman@foo.bar 
+  print "$addr\n"; # prints Neuman@foo.bar
 
 Now let's add the check for top level domains:
 
@@ -620,13 +620,13 @@ Need to determine why an address failed?
 
 If an error is encountered, an exception is raised.  This is really
 only possible when performing DNS queries.  Trap any exceptions by
-wrapping the call in an eval block: 
+wrapping the call in an eval block:
 
   eval {
     $addr = Email::Valid->address( -address => 'maurice@hevanet.com',
                                    -mxcheck => 1 );
   };
-  warn "an error was encountered: $@" if $@; 
+  warn "an error was encountered: $@" if $@;
 
 =head1 BUGS
 
@@ -636,7 +636,7 @@ a record cannot be found.
 
 =head1 AUTHOR
 
-Copyright 1998-2003, Maurice Aubrey E<lt>maurice@hevanet.comE<gt>. 
+Copyright 1998-2003, Maurice Aubrey E<lt>maurice@hevanet.comE<gt>.
 All rights reserved.
 
 This module is free software; you may redistribute it and/or
@@ -646,7 +646,7 @@ modify it under the same terms as Perl itself.
 
 Significant portions of this module are based on the ckaddr program
 written by Tom Christiansen and the RFC822 address pattern developed
-by Jeffrey Friedl.  Neither were involved in the construction of this 
+by Jeffrey Friedl.  Neither were involved in the construction of this
 module; all errors are mine.
 
 Thanks very much to the following people for their suggestions and
@@ -654,7 +654,7 @@ bug fixes:
 
   Otis Gospodnetic <otis@DOMINIS.com>
   Kim Ryan <kimaryan@ozemail.com.au>
-  Pete Ehlke <pde@listserv.music.sony.com> 
+  Pete Ehlke <pde@listserv.music.sony.com>
   Lupe Christoph
   David Birnbaum
   Achim
