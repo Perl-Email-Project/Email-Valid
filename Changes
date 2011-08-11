@@ -7,7 +7,10 @@ Revision history for Perl extension Email::Valid.
           avoid a pointless warning (mentioned in RT #68312)
 
           check TLD validity before MX records
-          address RT #32237, thanks, meyerdigital)
+          (address RT #32237, thanks, meyerdigital)
+
+          reject addresses with non-ASCII characters
+          (address RT #50230, thanks, ferreira)
 
 0.184     2010-06-10
           initialize Net::DNS resolver earlier

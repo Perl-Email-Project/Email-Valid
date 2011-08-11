@@ -104,7 +104,8 @@ sub rfc822 {
   my $addr = $args{address} or return $self->details('rfc822');
   $addr = $addr->address if eval { $addr->isa('Mail::Address') };
 
-  return $self->details('rfc822') unless $addr =~ m/^$RFC822PAT$/o;
+  return $self->details('rfc822')
+    if $addr =~ /\P{ASCII}/ or $addr !~ m/^$RFC822PAT$/o;
 
   return 1;
 }
