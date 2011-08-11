@@ -326,6 +326,7 @@ sub address {
   }
 
   if ($args{fqdn}) {
+    no warnings 'uninitialized'; # valid domain parts might return undef
     $self->_valid_domain_parts($addr->host) > 1
       or return $self->details('fqdn');
   }
