@@ -1,7 +1,7 @@
 #!perl
 use strict;
 
-use Test::More tests => 21;
+use Test::More tests => 22;
 
 BEGIN {
   use_ok('Email::Valid');
@@ -12,6 +12,11 @@ my $v = Email::Valid->new;
 ok(
   ! $v->address('Alfred Neuman <Neuman@BBN-TENEXA>'),
   'Alfred Neuman <Neuman@BBN-TENEXA>',
+);
+
+ok(
+  $v->address('123@example.com'),
+  '123@example.com',
 );
 
 ok(
