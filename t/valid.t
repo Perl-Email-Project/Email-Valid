@@ -86,7 +86,7 @@ ok(
 
 SKIP: {
   skip "your dns appears missing or failing to resolve", 2
-    unless $v->address(-address=> 'devnull@pobox.com', -mxcheck => 1);
+    unless eval { $v->address(-address=> 'devnull@pobox.com', -mxcheck => 1) };
 
   if (
     $v->address(-address => 'blort@will-never-exist.pobox.com', -mxcheck => 1)
