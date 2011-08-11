@@ -331,14 +331,14 @@ sub address {
       or return $self->details('fqdn');
   }
 
+  if ($args{tldcheck}) {
+    $self->tld( $addr->host ) or return $self->details('tldcheck');
+  }
+
   if ($args{mxcheck}) {
     # I'm not sure this ->details call is needed, but I'll test for it later.
     # The whole ->details thing is... weird. -- rjbs, 2006-06-08
     $self->mx( $addr->host ) or return $self->details('mxcheck');
-  }
-
-  if ($args{tldcheck}) {
-    $self->tld( $addr->host ) or return $self->details('tldcheck');
   }
 
   return (wantarray ? ($addr->address, $addr) : $addr->address);
