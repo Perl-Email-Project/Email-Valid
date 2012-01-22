@@ -14,7 +14,7 @@ use Scalar::Util 'blessed';
 
 use bytes;
 
-$VERSION = '0.185';
+$VERSION = '0.186';
 
 %AUTOLOAD = (
   fqdn     => 1,

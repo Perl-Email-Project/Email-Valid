@@ -1,5 +1,12 @@
 Revision history for Perl extension Email::Valid.
 
+0.186     2012-01-22
+          use blessed($x) instead of wrapping an ->isa called in eval{}; this
+          patch (thanks, Felipe Bergo!) was submitted to avoid problems with
+          people who have global __DIE__ handlers, but was applied to just
+          avoid the dumb eval{}; people with __DIE__ are otherwise on their
+          own, here
+
 0.185     2011-08-11
           do not die in t/valid.t when testing for working DNS
           (address RT #70157, thanks, Alexey Tourbin)
