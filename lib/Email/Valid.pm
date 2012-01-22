@@ -10,6 +10,7 @@ use Carp;
 use IO::File;
 use Mail::Address;
 use File::Spec;
+use Scalar::Util 'blessed';
 
 use bytes;
 
@@ -102,7 +103,7 @@ sub rfc822 {
   my %args = $self->_rearrange([qw( address )], \@_);
 
   my $addr = $args{address} or return $self->details('rfc822');
-  $addr = $addr->address if eval { $addr->isa('Mail::Address') };
+  $addr = $addr->address if (blessed($addr) && $addr->isa('Mail::Address'));
 
   return $self->details('rfc822')
     if $addr =~ /\P{ASCII}/ or $addr !~ m/^$RFC822PAT$/o;
@@ -234,7 +235,7 @@ sub _host {
   my $self = shift;
   my $addr = shift;
 
-  $addr = $addr->address if eval { $addr->isa('Mail::Address') };
+  $addr = $addr->address if (blessed($addr) && $addr->isa('Mail::Address'));
 
   my $host = ($addr =~ /^.*@(.*)$/ ? $1 : $addr);
   $host =~ s/\s+//g;
@@ -312,7 +313,7 @@ sub address {
                                     local_rules )], \@_);
 
   my $addr = $args{address} or return $self->details('rfc822');
-  $addr = $addr->address if eval { $addr->isa('Mail::Address') };
+  $addr = $addr->address if (blessed($addr) && $addr->isa('Mail::Address'));
 
   $addr = $self->_fudge( $addr ) if $args{fudge};
   $self->rfc822( -address => $addr ) or return undef;
