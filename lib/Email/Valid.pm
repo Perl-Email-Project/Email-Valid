@@ -58,6 +58,7 @@ sub _initialize {
   $self->{tldcheck}    = 0;
   $self->{fudge}       = 0;
   $self->{fqdn}        = 1;
+  $self->{allow_ip}    = 1;
   $self->{local_rules} = 0;
   $self->{localpart}   = 1;
   $self->{details}     = $Details = undef;
@@ -346,11 +347,15 @@ sub address {
       or return $self->details('localpart');
   }
 
-  if ($args{fqdn}) {
+  my $ip_ok = $args{allow_ip} && $addr->host =~ /\A\[
+    (?:[0-9]{1,3}\.){3}[0-9]{1,3}
+  /x;
+
+  if (! $ip_ok && $args{fqdn}) {
     my $domain_parts = $self->_valid_domain_parts($addr->host);
 
     return $self->details('fqdn')
-      unless $domain_parts && $domain_parts > 1;
+      unless $ip_ok || ($domain_parts && $domain_parts > 1);
   }
 
   if ($args{tldcheck}) {
@@ -531,6 +536,7 @@ individual methods below of details.
  -tldcheck
  -fudge
  -fqdn
+ -allow_ip
  -local_rules
 
 =item mx ( <ADDRESS>|<DOMAIN> )
@@ -565,10 +571,24 @@ common addressing errors.  Currently, this results in the removal of
 spaces in AOL addresses, and the conversion of commas to periods in
 Compuserve addresses.  The default is false.
 
+=item allow_ip ( <TRUE>|<FALSE> )
+
+Specifies whether a "domain literal" is acceptable as the domain part.  That
+means addresses like:  C<rjbs@[1.2.3.4]>
+
+The checking for the domain literal is stricter than the RFC and looser than
+checking for a valid IP address, I<but this is subject to change>.
+
+The default is true.
+
 =item fqdn ( <TRUE>|<FALSE> )
 
 Species whether addresses passed to address() must contain a fully
 qualified domain name (FQDN).  The default is true.
+
+B<Please note!>  FQDN checks only occur for non-domain-literals.  In other
+words, if you have set C<allow_ip> and the address ends in a bracketed IP
+address, the FQDN check will not occur.
 
 =item local_rules ( <TRUE>|<FALSE> )
 
@@ -602,6 +622,7 @@ If the last call to address() returned undef, you can call this
 method to determine why it failed.  Possible values are:
 
  rfc822
+ localpart
  local_rules
  fqdn
  mxcheck

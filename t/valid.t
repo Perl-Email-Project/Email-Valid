@@ -1,7 +1,7 @@
 #!perl
 use strict;
 
-use Test::More tests => 29;
+use Test::More tests => 31;
 
 BEGIN {
   use_ok('Email::Valid');
@@ -135,6 +135,16 @@ SKIP: {
     'blort@will-never-exist.pobox.com, with mxcheck, is invalid',
   ) or diag "was using $Email::Valid::DNS_Method for dns resolution";
 }
+
+ok(
+  $v->address(-address => 'rjbs@[127.0.0.1]'),
+  'a domain literal address is okay',
+);
+
+ok(
+  ! $v->address(-address => 'rjbs@[127.0.0.1]', -allow_ip => 0),
+  'a domain literal address is not okay if we say -allow_ip=>0',
+);
 
 SKIP: {
   skip "tests require Net::Domain::TLD 1.65", 3
