@@ -347,9 +347,10 @@ sub address {
   }
 
   if ($args{fqdn}) {
-    no warnings 'uninitialized'; # valid domain parts might return undef
-    $self->_valid_domain_parts($addr->host) > 1
-      or return $self->details('fqdn');
+    my $domain_parts = $self->_valid_domain_parts($addr->host);
+
+    return $self->details('fqdn')
+      unless $domain_parts && $domain_parts > 1;
   }
 
   if ($args{tldcheck}) {
