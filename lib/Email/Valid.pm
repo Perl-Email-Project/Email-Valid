@@ -332,6 +332,10 @@ sub address {
 
   $addr or return $self->details('rfc822'); # This should never happen
 
+  if (length($addr->address) > 254) {
+    return $self->details('address_too_long');
+  }
+
   if ($args{local_rules}) {
     $self->_local_rules( $addr->user, $addr->host )
       or return $self->details('local_rules');
