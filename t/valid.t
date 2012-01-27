@@ -1,7 +1,7 @@
 #!perl
 use strict;
 
-use Test::More tests => 24;
+use Test::More tests => 29;
 
 BEGIN {
   use_ok('Email::Valid');
@@ -53,6 +53,27 @@ is(
   'fred&barney@stonehenge.com',
   "comments nicely dropped from an address",
 );
+
+is ($v->address(-address => 'user@example.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'),
+  undef,
+  "address with > 254 chars fails",
+);
+
+is($v->details, 'address_too_long', "details say address is too long");
+
+is(
+  $v->address(-address => 'somebody@example.com', -localpart => 1),
+  'somebody@example.com',
+  "localpart with 64 chars or less is valid",
+);
+
+is(
+  $v->address(-address => 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@example.com', -localpart => 1),
+  undef,
+  "localpart with 64 chars or more fails",
+);
+
+is($v->details, 'localpart', "details are localpart");
 
 ok(
   $v->address('somebody@ example.com'),
