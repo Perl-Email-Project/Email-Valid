@@ -22,6 +22,7 @@ $VERSION = '0.186';
   mxcheck  => 1,
   tldcheck => 1,
   local_rules => 1,
+  localpart => 1,
 );
 
 $NSLOOKUP_PAT = 'preference|serial|expire|mail\s+exchanger';
@@ -58,6 +59,7 @@ sub _initialize {
   $self->{fudge}       = 0;
   $self->{fqdn}        = 1;
   $self->{local_rules} = 0;
+  $self->{localpart}   = 1;
   $self->{details}     = $Details = undef;
 }
 
@@ -280,6 +282,14 @@ sub _local_rules {
   1;
 }
 
+sub _valid_local_part {
+  my ($self, $localpart) = @_;
+
+  return 0 unless $localpart and length $localpart <= 64;
+
+  return 1;
+}
+
 sub _valid_domain_parts {
   my ($self, $string) = @_;
 
@@ -325,6 +335,11 @@ sub address {
   if ($args{local_rules}) {
     $self->_local_rules( $addr->user, $addr->host )
       or return $self->details('local_rules');
+  }
+
+  if ($args{localpart}) {
+    $self->_valid_local_part($addr->user) > 0
+      or return $self->details('localpart');
   }
 
   if ($args{fqdn}) {
