@@ -1,5 +1,9 @@
 Revision history for Perl extension Email::Valid.
 
+0.187     2012-01-27
+          check email address length and localpart length (thanks, Steve
+          Bertrand!)
+
 0.186     2012-01-22
           use blessed($x) instead of wrapping an ->isa called in eval{}; this
           patch (thanks, Felipe Bergo!) was submitted to avoid problems with
