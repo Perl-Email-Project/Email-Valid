@@ -1,5 +1,9 @@
 Revision history for Perl extension Email::Valid.
 
+0.188     2012-03-15
+          fix [rt.cpan.org #75736], in which 0@domain.com was considered
+          invalid (thanks for the fix from Steve Bertrand)
+
 0.187     2012-01-27
           addresses in the form rjbs@[1.2.3.4] are now (correctly) considered
           valid; this can be disabled with the -allow_ip option

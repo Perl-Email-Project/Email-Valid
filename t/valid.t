@@ -1,7 +1,7 @@
 #!perl
 use strict;
 
-use Test::More tests => 31;
+use Test::More tests => 33;
 
 BEGIN {
   use_ok('Email::Valid');
@@ -78,6 +78,18 @@ is($v->details, 'localpart', "details are localpart");
 ok(
   $v->address('somebody@ example.com'),
   "space between @ and domain is valid",
+);
+
+is(
+  $v->address(-address => '1@example.com', -localpart => 1),
+  '1@example.com',
+  "localpart in true context succeeds",
+);
+
+is(
+  $v->address(-address => '0@example.com', -localpart => 1),
+  '0@example.com',
+  "localpart in false context is defined (bug 75736)",
 );
 
 ok(
