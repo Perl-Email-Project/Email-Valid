@@ -1,7 +1,7 @@
 #!perl
 use strict;
 
-use Test::More tests => 33;
+use Test::More tests => 34;
 
 BEGIN {
   use_ok('Email::Valid');
@@ -162,17 +162,36 @@ SKIP: {
   skip "tests require Net::Domain::TLD 1.65", 3
     unless (eval {require Net::Domain::TLD;Net::Domain::TLD->VERSION(1.65);1});
 
-  my $v = Email::Valid->new;
+  {
+    my $v = Email::Valid->new;
+
+    ok(
+      $v->address(
+        -address => 'blort@notarealdomainfoo.com',
+        -mxcheck => 0,
+        -tldcheck => 1,
+      ),
+      'blort@notarealdomainfoo.com is ok with tldcheck',
+    );
+
+    ok(
+      ! $v->address(
+        -address => 'blort@notarealdomainfoo.bla',
+        -mxcheck => 0,
+        -tldcheck => 1,
+      ),
+      'blort@notarealdomainfoo.bla is not ok with tldcheck',
+    );
+
+    is($v->details, 'tldcheck', "it was the tldcheck that broke this email");
+  }
 
   ok(
-    $v->address( -address => 'blort@notarealdomainfoo.com', -mxcheck => 0, -tldcheck => 1),
-    'blort@notarealdomainfoo.com is ok with tldcheck',
+    Email::Valid->address(
+      -tldcheck => 1,
+      -allow_ip => 1,
+      -address => q!foo@[1.2.3.4]!,
+    ),
+    "allow_ip + domain literal = no tldcheck",
   );
-
-  ok(
-    ! $v->address( -address => 'blort@notarealdomainfoo.bla', -mxcheck => 0, -tldcheck => 1),
-    'blort@notarealdomainfoo.bla is not ok with tldcheck',
-  );
-
-  is($v->details, 'tldcheck', "it was the tldcheck that broke this email");
 }

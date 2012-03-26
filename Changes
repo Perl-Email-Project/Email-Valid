@@ -1,5 +1,9 @@
 Revision history for Perl extension Email::Valid.
 
+0.189     2012-03-26
+          addresses in the form rjbs@[1.2.3.4], when allowed by allow_ip,
+          are not failed for the tld check (reported by Marcel Grünauer)
+
 0.188     2012-03-15
           fix [rt.cpan.org #75736], in which 0@domain.com was considered
           invalid (thanks for the fix from Steve Bertrand)

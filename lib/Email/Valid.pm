@@ -358,7 +358,7 @@ sub address {
       unless $ip_ok || ($domain_parts && $domain_parts > 1);
   }
 
-  if ($args{tldcheck}) {
+  if (! $ip_ok && $args{tldcheck}) {
     $self->tld( $addr->host ) or return $self->details('tldcheck');
   }
 
@@ -553,11 +553,6 @@ the behavior of the resolver (e.g. change the default tcp_timeout
 value) by manipulating the global Net::DNS::Resolver instance stored in
 $Email::Valid::Resolver.
 
-=item tld ( <ADDRESS> )
-
-This method determines whether the domain part of an address is in a recognized
-top-level domain.
-
 =item rfc822 ( <ADDRESS> )
 
 This method determines whether an address conforms to the RFC822
@@ -589,6 +584,15 @@ qualified domain name (FQDN).  The default is true.
 B<Please note!>  FQDN checks only occur for non-domain-literals.  In other
 words, if you have set C<allow_ip> and the address ends in a bracketed IP
 address, the FQDN check will not occur.
+
+=item tld ( <ADDRESS> )
+
+This method determines whether the domain part of an address is in a
+recognized top-level domain.
+
+B<Please note!>  TLD checks only occur for non-domain-literals.  In other
+words, if you have set C<allow_ip> and the address ends in a bracketed IP
+address, the TLD check will not occur.
 
 =item local_rules ( <TRUE>|<FALSE> )
 
