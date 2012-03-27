@@ -159,7 +159,7 @@ ok(
 );
 
 SKIP: {
-  skip "tests require Net::Domain::TLD 1.65", 3
+  skip "tests require Net::Domain::TLD 1.65", 4
     unless (eval {require Net::Domain::TLD;Net::Domain::TLD->VERSION(1.65);1});
 
   {

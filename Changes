@@ -1,5 +1,8 @@
 Revision history for Perl extension Email::Valid.
 
+0.190     2012-03-26
+          fix skip test count
+
 0.189     2012-03-26
           addresses in the form rjbs@[1.2.3.4], when allowed by allow_ip,
           are not failed for the tld check (reported by Marcel Grünauer)
