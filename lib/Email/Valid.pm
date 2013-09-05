@@ -493,7 +493,8 @@ $RFC822PAT =~ s/\n//g;
 =head1 SYNOPSIS
 
   use Email::Valid;
-  print (Email::Valid->address('maurice@hevanet.com') ? 'yes' : 'no');
+  my $address = Email::Valid->address('maurice@hevanet.com');
+  print ($address ? 'yes' : 'no');
 
 =head1 DESCRIPTION
 
