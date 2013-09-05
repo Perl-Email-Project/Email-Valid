@@ -4,9 +4,9 @@ use warnings;
 package Email::Valid;
 # ABSTRACT: Check validity of Internet email addresses
 our (
-  $VERSION, $RFC822PAT, %AUTOLOAD, $AUTOLOAD, $NSLOOKUP_PAT,
-  @NSLOOKUP_PATHS, $Details, $Resolver, $Nslookup_Path,
-  $DNS_Method, $TLD, $Debug,
+  $RFC822PAT,
+  $Details, $Resolver, $Nslookup_Path,
+  $Debug,
 );
 
 use Carp;
@@ -15,9 +15,7 @@ use Mail::Address;
 use File::Spec;
 use Scalar::Util 'blessed';
 
-$VERSION = '0.190';
-
-%AUTOLOAD = (
+our %AUTOLOAD = (
   fqdn     => 1,
   fudge    => 1,
   mxcheck  => 1,
@@ -26,11 +24,11 @@ $VERSION = '0.190';
   localpart => 1,
 );
 
-$NSLOOKUP_PAT = 'preference|serial|expire|mail\s+exchanger';
-@NSLOOKUP_PATHS = File::Spec->path();
+our $NSLOOKUP_PAT = 'preference|serial|expire|mail\s+exchanger';
+our @NSLOOKUP_PATHS = File::Spec->path();
 
 # initialize if already loaded, better in prefork mod_perl environment
-$DNS_Method = defined $Net::DNS::VERSION ? 'Net::DNS' : '';
+our $DNS_Method = defined $Net::DNS::VERSION ? 'Net::DNS' : '';
 unless ($DNS_Method) {
     __PACKAGE__->_select_dns_method;
 }
@@ -382,7 +380,7 @@ sub address {
 sub AUTOLOAD {
   my $self = shift;
   my $type = ref($self) || die "$self is not an object";
-  my $name = $AUTOLOAD;
+  my $name = our $AUTOLOAD;
 
   $name =~ s/.*://;
   return if $name eq 'DESTROY';
