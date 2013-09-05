@@ -1,6 +1,8 @@
 Revision history for Perl extension Email::Valid.
 
 {{$NEXT}}
+
+1.191     2013-09-04 21:52:50 America/New_York
           update bugtracker, repo, etc.
 
           mxcheck fails when remote MX record is "."
