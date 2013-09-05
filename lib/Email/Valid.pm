@@ -144,10 +144,17 @@ sub _net_dns_query {
 
   $Resolver = Net::DNS::Resolver->new unless defined $Resolver;
 
-  my $packet = $Resolver->send($host, 'A') or croak $Resolver->errorstring;
-  return 1 if $packet->header->ancount;
+  my $packet = $Resolver->send($host, 'MX') or croak $Resolver->errorstring;
+  if ($packet->header->ancount) {
+    my $mx = ($packet->answer)[0]->exchange;
+    if ($mx eq '.' or $mx eq '') {
+      return $self->details('mx'); # Null MX
+    } else {
+      return 1;
+    }
+  }
 
-  $packet = $Resolver->send($host, 'MX') or croak $Resolver->errorstring;
+  $packet = $Resolver->send($host, 'A') or croak $Resolver->errorstring;
   return 1 if $packet->header->ancount;
 
   return $self->details('mx');

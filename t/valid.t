@@ -1,7 +1,7 @@
 #!perl
 use strict;
 
-use Test::More tests => 34;
+use Test::More tests => 35;
 
 BEGIN {
   use_ok('Email::Valid');
@@ -128,13 +128,13 @@ ok(
 );
 
 SKIP: {
-  skip "your dns appears missing or failing to resolve", 2
+  skip "your dns appears missing or failing to resolve", 3
     unless eval { $v->address(-address=> 'devnull@pobox.com', -mxcheck => 1) };
 
   if (
     $v->address(-address => 'blort@will-never-exist.pobox.com', -mxcheck => 1)
   ) {
-    skip "your dns is lying to you; you must not use mxcheck", 2;
+    skip "your dns is lying to you; you must not use mxcheck", 3;
   }
 
   ok(
@@ -146,6 +146,11 @@ SKIP: {
     !$v->address(-address => 'blort@will-never-exist.pobox.com', -mxcheck => 1),
     'blort@will-never-exist.pobox.com, with mxcheck, is invalid',
   ) or diag "was using $Email::Valid::DNS_Method for dns resolution";
+
+  ok(
+    !$v->address(-address => 'blort@yhaoo.com', -mxcheck => 1),
+    'yhaoo.com has a null mx record',
+  );
 }
 
 ok(
