@@ -24,7 +24,6 @@ WriteMakefile(
     'NAME'	   => 'Email::Valid',
     'VERSION_FROM' => 'lib/Email/Valid.pm',
     MIN_PERL_VERSION => '5.006',
-    (eval { ExtUtils::MakeMaker->VERSION(6.21) } ? (LICENSE => 'perl') : ()),
     'PREREQ_PM'    => {
       'Test::More' => 0,
       'Mail::Address' => 0,
@@ -35,16 +34,4 @@ WriteMakefile(
         : ()
       ),
     },
-
-    'dist'         => { 'COMPRESS'=>'gzip -9f', 'SUFFIX' => 'gz',
-                        'ZIP'=>'/usr/bin/zip', 'ZIPFLAGS'=>'-rl' },
-
-    (eval { ExtUtils::MakeMaker->VERSION(6.46) }
-      ? (META_MERGE => {
-          resources => {
-            repository => 'http://github.com/rjbs/email-valid'
-          },
-        })
-      : ()
-    ),
 );

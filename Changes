@@ -1,5 +1,8 @@
 Revision history for Perl extension Email::Valid.
 
+{{$NEXT}}
+          update bugtracker, repo, etc.
+
 0.190     2012-03-26
           fix skip test count
 

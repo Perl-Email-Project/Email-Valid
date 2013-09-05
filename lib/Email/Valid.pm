@@ -1,10 +1,13 @@
-package Email::Valid;
 require 5.006;
 use strict;
 use warnings;
-use vars qw( $VERSION $RFC822PAT %AUTOLOAD $AUTOLOAD $NSLOOKUP_PAT
-             @NSLOOKUP_PATHS $Details $Resolver $Nslookup_Path
-             $DNS_Method $TLD $Debug );
+package Email::Valid;
+# ABSTRACT: Check validity of Internet email addresses
+our (
+  $VERSION, $RFC822PAT, %AUTOLOAD, $AUTOLOAD, $NSLOOKUP_PAT,
+  @NSLOOKUP_PATHS, $Details, $Resolver, $Nslookup_Path,
+  $DNS_Method, $TLD, $Debug,
+);
 
 use Carp;
 use IO::File;
@@ -488,11 +491,6 @@ $RFC822PAT =~ s/\n//g;
 
 1;
 
-__END__
-
-=head1 NAME
-
-Email::Valid - Check validity of Internet email addresses
 
 =head1 SYNOPSIS
 
@@ -675,20 +673,6 @@ wrapping the call in an eval block:
                                    -mxcheck => 1 );
   };
   warn "an error was encountered: $@" if $@;
-
-=head1 BUGS
-
-Email::Valid should work with Perl for Win32.  In my experience,
-however, Net::DNS queries seem to take an extremely long time when
-a record cannot be found.
-
-=head1 AUTHOR
-
-Copyright 1998-2003, Maurice Aubrey E<lt>maurice@hevanet.comE<gt>.
-All rights reserved.
-
-This module is free software; you may redistribute it and/or
-modify it under the same terms as Perl itself.
 
 =head1 CREDITS
 
