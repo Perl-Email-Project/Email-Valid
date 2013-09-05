@@ -3,6 +3,11 @@ Revision history for Perl extension Email::Valid.
 {{$NEXT}}
           update bugtracker, repo, etc.
 
+          mxcheck fails when remote MX record is "."
+
+          drop use of bytes.pm; any bug fixed by that should be fixed again
+          properly
+
 0.190     2012-03-26
           fix skip test count
 

@@ -7,6 +7,11 @@ use Test::More;
 binmode Test::More->builder->$_, ':encoding(UTF-8)'
     for qw(output failure_output todo_output);
 
+BEGIN {
+  plan skip_all => "set EXTENDED_TESTING env var to run these"
+    unless $ENV{EXTENDED_TESTING};
+}
+
 use Email::Valid qw();
 use XML::LibXML qw();
 
