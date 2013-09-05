@@ -47,7 +47,7 @@ is(
   'foo@foo.com',
   "spaced out address is squished"
 );
- 
+
 is(
   $v->address(q{fred&barney@stonehenge(yup, the rock place).(that's dot)com}),
   'fred&barney@stonehenge.com',
