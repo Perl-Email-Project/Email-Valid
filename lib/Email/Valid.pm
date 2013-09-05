@@ -15,8 +15,6 @@ use Mail::Address;
 use File::Spec;
 use Scalar::Util 'blessed';
 
-use bytes;
-
 $VERSION = '0.190';
 
 %AUTOLOAD = (
