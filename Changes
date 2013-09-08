@@ -2,6 +2,9 @@ Revision history for Perl extension Email::Valid.
 
 {{$NEXT}}
 
+1.192     2013-09-07 21:00:55 America/New_York
+          if Net::DNS is not available, do not test null mx validity
+
 1.191     2013-09-04 21:52:50 America/New_York
           update bugtracker, repo, etc.
 
