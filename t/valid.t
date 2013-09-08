@@ -147,10 +147,14 @@ SKIP: {
     'blort@will-never-exist.pobox.com, with mxcheck, is invalid',
   ) or diag "was using $Email::Valid::DNS_Method for dns resolution";
 
+
+  skip "can't deal with null mx without Net::DNS", 1
+    unless $Email::Valid::DNS_Method eq 'Net::DNS';
+
   ok(
     !$v->address(-address => 'blort@yhaoo.com', -mxcheck => 1),
     'yhaoo.com has a null mx record',
-  );
+  ) or diag "was using $Email::Valid::DNS_Method for dns resolution";
 }
 
 ok(
