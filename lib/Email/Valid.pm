@@ -145,11 +145,14 @@ sub _net_dns_query {
 
   my $packet = $Resolver->send($host, 'MX') or croak $Resolver->errorstring;
   if ($packet->header->ancount) {
-    my $mx = ($packet->answer)[0]->exchange;
-    if ($mx eq '.' or $mx eq '') {
-      return $self->details('mx'); # Null MX
-    } else {
-      return 1;
+    my @mx_entries = grep { $_->{'type'} eq 'MX' } $packet->answer;
+    if(@mx_entries) {
+        my $mx = ($mx_entries[0])->exchange;
+        if ($mx eq '.' or $mx eq '') {
+          return $self->details('mx'); # Null MX
+        } else {
+          return 1;
+        }
     }
   }
 
