@@ -2,6 +2,7 @@ require 5.006;
 use strict;
 use warnings;
 package Email::Valid;
+
 # ABSTRACT: Check validity of Internet email addresses
 our (
   $RFC822PAT,
