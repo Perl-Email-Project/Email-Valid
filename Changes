@@ -1,6 +1,8 @@
 Revision history for Perl extension Email::Valid.
 
 {{$NEXT}}
+
+1.193     2014-03-26 22:29:28-04:00 America/New_York
         - improve behavior on CNAME MX records
 
 1.192     2013-09-07 21:00:55 America/New_York
