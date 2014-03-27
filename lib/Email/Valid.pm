@@ -17,6 +17,7 @@ use File::Spec;
 use Scalar::Util 'blessed';
 
 our %AUTOLOAD = (
+  allow_ip => 1,
   fqdn     => 1,
   fudge    => 1,
   mxcheck  => 1,
