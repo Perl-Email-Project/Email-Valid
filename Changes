@@ -1,6 +1,7 @@
 Revision history for Perl extension Email::Valid.
 
 {{$NEXT}}
+        - improve behavior on CNAME MX records
 
 1.192     2013-09-07 21:00:55 America/New_York
           if Net::DNS is not available, do not test null mx validity
