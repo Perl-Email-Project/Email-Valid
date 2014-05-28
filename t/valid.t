@@ -152,8 +152,8 @@ SKIP: {
     unless $Email::Valid::DNS_Method eq 'Net::DNS';
 
   ok(
-    !$v->address(-address => 'blort@yhaoo.com', -mxcheck => 1),
-    'yhaoo.com has a null mx record',
+    !$v->address(-address => 'blort@no-mx-exists.manxome.org', -mxcheck => 1),
+    'no-mx-exists.manxome.org has a null mx record',
   ) or diag "was using $Email::Valid::DNS_Method for dns resolution";
 }
 
