@@ -397,7 +397,6 @@ sub AUTOLOAD {
 # Regular expression built using example from http://www.ex-parrot.com/pdw/Mail-RFC822-Address.html
 
 $RFC822PAT = <<'EOF';
-
 (?:(?:\r\n)?[ \t])*(?:(?:(?:[^()<>@,;:\\".\[\] \000-\031]+(?:(?:(?:\r\n)?[ \t]
 )+|\Z|(?=[\["()<>@,;:\\".\[\]]))|"(?:[^\"\r\\]|\\.|(?:(?:\r\n)?[ \t]))*"(?:(?:
 \r\n)?[ \t])*)(?:\.(?:(?:\r\n)?[ \t])*(?:[^()<>@,;:\\".\[\] \000-\031]+(?:(?:(
