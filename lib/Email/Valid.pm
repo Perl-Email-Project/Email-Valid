@@ -73,7 +73,7 @@ sub _rearrange {
   my(%args);
 
   ref $self ? %args = %$self : _initialize( \%args );
-  return %args unless @params;
+  return %args unless exists $params[0];
 
   unless ($params[0] =~ /^-/ and @params > 1) {
     while(@params) {
