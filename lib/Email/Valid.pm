@@ -281,16 +281,6 @@ sub _local_rules {
   my $self = shift;
   my($user, $host) = @_;
 
-  # AOL addresses cannot:
-  #     - Be shorter than 3 or longer than 16 characters
-  #     - Begin with numerals
-  #     - Contain periods, underscores, dashes or other punctuation characters
-  #
-  # http://postmaster.info.aol.com/faq.html
-  # Last updated: Aug 23, 2003
-  if ($host =~ /aol\.com/i) {
-    return undef unless $user =~ /^[a-zA-Z][a-zA-Z0-9]{2,15}$/;
-  }
   1;
 }
 

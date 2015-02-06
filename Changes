@@ -1,6 +1,7 @@
 Revision history for Perl extension Email::Valid.
 
 {{$NEXT}}
+        - AOL "local rules" no longer enforced
 
 1.195     2014-09-01 08:38:58-04:00 America/New_York
         - handle domain part with MX but no A record (thanks, Karel Miko)
