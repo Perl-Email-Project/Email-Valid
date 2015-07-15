@@ -151,7 +151,7 @@ sub _net_dns_query {
       my $mxhost = $mx->exchange;
       my $query = $Resolver->search($mx);
       foreach my $arr ($query->answer) {
-        return 1 unless $arr-type ne 'A';
+        return 1 unless $arr->type ne 'A';
       }
     }
   }
