@@ -75,7 +75,7 @@ sub _rearrange {
   ref $self ? %args = %$self : _initialize( \%args );
   return %args unless @params;
 
-  unless ($params[0] =~ /^-/ and @params > 1) {
+  unless (@params > 1 and $params[0] =~ /^-/) {
     while(@params) {
       croak 'unexpected number of parameters' unless @names;
       $args{ lc shift @names } = shift @params;
