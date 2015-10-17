@@ -144,7 +144,7 @@ sub _net_dns_query {
 
   $Resolver = Net::DNS::Resolver->new unless defined $Resolver;
 
-  my @mx_entries = Net::DNS::mx($Resolver,$host);
+  my @mx_entries = Net::DNS::mx($Resolver, $host);
 
   if (@mx_entries) {
     foreach my $mx (@mx_entries) {
