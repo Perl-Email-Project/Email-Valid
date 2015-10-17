@@ -1,6 +1,8 @@
 Revision history for Perl extension Email::Valid.
 
 {{$NEXT}}
+
+1.197     2015-10-16 22:57:05-04:00 America/New_York
         - improve detection of "no MXes" (thanks, Troy Morehouse)
         - avoid some avoidable warnings (thanks, Svetlana)
 
