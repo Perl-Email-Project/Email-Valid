@@ -1,6 +1,8 @@
 Revision history for Perl extension Email::Valid.
 
 {{$NEXT}}
+        - improve detection of "no MXes" (thanks, Troy Morehouse)
+        - avoid some avoidable warnings (thanks, Svetlana)
 
 1.196     2015-02-05 22:31:29-05:00 America/New_York
         - AOL "local rules" no longer enforced
