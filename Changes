@@ -1,6 +1,8 @@
 Revision history for Perl extension Email::Valid.
 
 {{$NEXT}}
+
+1.198     2015-10-25 22:36:37-04:00 America/New_York
         - fix a typo that caused the MX check to die
 
 1.197     2015-10-16 22:57:05-04:00 America/New_York
