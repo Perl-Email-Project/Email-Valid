@@ -149,7 +149,7 @@ sub _net_dns_query {
   if (@mx_entries) {
     foreach my $mx (@mx_entries) {
       my $mxhost = $mx->exchange;
-      my $query = $Resolver->search($mx);
+      my $query  = $Resolver->search($mxhost);
       foreach my $a_rr ($query->answer) {
         return 1 unless $a_rr->type ne 'A';
       }
