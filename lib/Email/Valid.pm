@@ -689,6 +689,6 @@ bug fixes:
 
 =head1 SEE ALSO
 
-Mail::Address, Net::DNS, Net::Domain::TLD, perlfaq9
+L<Mail::Address>, L<Net::DNS>, L<Net::Domain::TLD>, L<perlfaq9|https://metacpan.org/pod/distribution/perlfaq/lib/perlfaq9.pod>
 
 =cut
