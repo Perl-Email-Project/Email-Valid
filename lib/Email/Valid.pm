@@ -150,6 +150,7 @@ sub _net_dns_query {
     foreach my $mx (@mx_entries) {
       my $mxhost = $mx->exchange;
       my $query  = $Resolver->search($mxhost);
+      next unless ($query);
       foreach my $a_rr ($query->answer) {
         return 1 unless $a_rr->type ne 'A';
       }
