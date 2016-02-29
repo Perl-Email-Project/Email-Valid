@@ -3,6 +3,7 @@ Revision history for Perl extension Email::Valid.
 {{$NEXT}}
         - Made first mention of various external modules be L<> linked.
         - Added link to RFC822 to SEE ALSO
+        - Various typo and formatting fixes
 
 1.198     2015-10-25 22:36:37-04:00 America/New_York
         - fix a typo that caused the MX check to die

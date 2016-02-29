@@ -510,9 +510,9 @@ validity of top level domains.
 
 =head1 METHODS
 
-  Every method which accepts an <ADDRESS> parameter may
-  be passed either a string or an instance of the Mail::Address
-  class.  All errors raise an exception.
+Every method which accepts an C<< <ADDRESS> >> parameter may
+be passed either a string or an instance of the Mail::Address
+class.  All errors raise an exception.
 
 =over 4
 
@@ -523,7 +523,7 @@ It accepts an optional list of named parameters to
 control the behavior of the object at instantiation.
 
 The following named parameters are allowed.  See the
-individual methods below of details.
+individual methods below for details.
 
  -mxcheck
  -tldcheck
@@ -571,7 +571,7 @@ The default is true.
 
 =item fqdn ( <TRUE>|<FALSE> )
 
-Species whether addresses passed to address() must contain a fully
+Specifies whether addresses passed to address() must contain a fully
 qualified domain name (FQDN).  The default is true.
 
 B<Please note!>  FQDN checks only occur for non-domain-literals.  In other
@@ -606,10 +606,10 @@ for a valid top level domains.  The default is false.
 =item address ( <ADDRESS> )
 
 This is the primary method which determines whether an email
-address is valid.  It's behavior is modified by the values of
+address is valid.  Its behavior is modified by the values of
 mxcheck(), tldcheck(), local_rules(), fqdn(), and fudge().  If the address
 passes all checks, the (possibly modified) address is returned as
-a string.  Otherwise, the undefined value is returned.
+a string.  Otherwise, undef is returned.
 In a list context, the method also returns an instance of the
 Mail::Address class representing the email address.
 
@@ -626,7 +626,7 @@ method to determine why it failed.  Possible values are:
  tldcheck
 
 If the class is not instantiated, you can get the same information
-from the global $Email::Valid::Details.
+from the global C<$Email::Valid::Details>.
 
 =back
 
