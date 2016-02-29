@@ -499,14 +499,14 @@ This module determines whether an email address is well-formed, and
 optionally, whether a mail host exists for the domain.
 
 Please note that there is no way to determine whether an
-address is deliverable without attempting delivery (for details, see
-perlfaq 9).
+address is deliverable without attempting delivery
+(for details, see L<perlfaq 9|http://perldoc.perl.org/perlfaq9.html#How-do-I-check-a-valid-mail-address>).
 
 =head1 PREREQUISITES
 
-This module requires perl 5.004 or later and the Mail::Address module.
-Either the Net::DNS module or the nslookup utility is required
-for DNS checks.  The Net::Domain::TLD module is required to check the
+This module requires perl 5.004 or later and the L<Mail::Address> module.
+Either the L<Net::DNS> module or the nslookup utility is required
+for DNS checks.  The L<Net::Domain::TLD> module is required to check the
 validity of top level domains.
 
 =head1 METHODS
@@ -544,8 +544,8 @@ Either the Net::DNS module or the nslookup utility is required for
 DNS checks.  Using Net::DNS is the preferred method since error
 handling is improved.  If Net::DNS is available, you can modify
 the behavior of the resolver (e.g. change the default tcp_timeout
-value) by manipulating the global Net::DNS::Resolver instance stored in
-$Email::Valid::Resolver.
+value) by manipulating the global L<Net::DNS::Resolver> instance stored in
+C<$Email::Valid::Resolver>.
 
 =item rfc822 ( <ADDRESS> )
 
