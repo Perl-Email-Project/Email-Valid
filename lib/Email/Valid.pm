@@ -691,4 +691,8 @@ bug fixes:
 
 L<Mail::Address>, L<Net::DNS>, L<Net::Domain::TLD>, L<perlfaq9|https://metacpan.org/pod/distribution/perlfaq/lib/perlfaq9.pod>
 
+L<RFC822|https://www.ietf.org/rfc/rfc0822.txt> -
+standard for the format of ARPA internet text messages.
+Superseded by L<RFC2822|https://www.ietf.org/rfc/rfc2822.txt>.
+
 =cut
