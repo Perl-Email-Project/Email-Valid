@@ -216,7 +216,10 @@ sub tld {
 
   my $host = $self->_host( $args{address} or return $self->details('tld') );
   my ($tld) = $host =~ m#\.(\w+)$#;
-  return Net::Domain::TLD::tld_exists($tld);
+
+  my %invalid_tlds = map { $_ => 1 } qw(invalid test example localhost);
+
+  return defined $invalid_tlds{$tld} ? 0 : Net::Domain::TLD::tld_exists($tld);
 }
 
 # Purpose: Check whether a DNS record (A or MX) exists for a domain.
