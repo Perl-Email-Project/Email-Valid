@@ -1,7 +1,7 @@
 #!perl
 use strict;
 
-use Test::More tests => 35;
+use Test::More tests => 39;
 
 BEGIN {
   use_ok('Email::Valid');
@@ -22,7 +22,28 @@ for my $sub (
     $v->address( $sub->('123@example.com') ),
     '123@example.com',
   );
+
+
 }
+ok(
+  ! $v->address( -address => '123@example.invalid', -tldcheck => 1),
+  '123@example.invalid is wrong as per IETF spec (invalid TLD)',
+);
+
+ok(
+  ! $v->address( -address => '123@example.test', -tldcheck => 1),
+  '123@example.test is wrong as per IETF spec (invalid TLD)',
+);
+
+ok(
+  ! $v->address( -address => '123@example.example', -tldcheck => 1),
+  '123@example.example is wrong as per IETF spec (invalid TLD)',
+);
+
+ok(
+  ! $v->address( -address => '123@example.localhost', -tldcheck => 1),
+  '123@example.localhost is wrong as per IETF spec (invalid TLD)',
+);
 
 ok(
   $v->address( -address => 'Alfred Neuman <Neuman@BBN-TENEXA>', -fqdn    => 0),
@@ -166,6 +187,7 @@ ok(
   ! $v->address(-address => 'rjbs@[127.0.0.1]', -allow_ip => 0),
   'a domain literal address is not okay if we say -allow_ip=>0',
 );
+
 
 SKIP: {
   skip "tests require Net::Domain::TLD 1.65", 4
