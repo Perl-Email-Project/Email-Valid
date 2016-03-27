@@ -1,6 +1,9 @@
 Revision history for Perl extension Email::Valid.
 
 {{$NEXT}}
+        - More "no MX found" fixes (thanks, Troy Morehouse)
+        - treat restricted/reserved TLDs (invalid, test, example, localhost)
+          as invalid (thanks, Steve Bertrand!)
         - Made first mention of various external modules be L<> linked.
         - Added link to RFC822 to SEE ALSO
         - Various typo and formatting fixes
