@@ -2,6 +2,9 @@ Revision history for Perl extension Email::Valid.
 
 {{$NEXT}}
 
+1.200     2016-03-27 17:36:57-04:00 America/New_York
+        - skip more tests when Net::Domain::TLD not available, as required
+
 1.199     2016-03-27 09:58:03-04:00 America/New_York
         - More "no MX found" fixes (thanks, Troy Morehouse)
         - treat restricted/reserved TLDs (invalid, test, example, localhost)
