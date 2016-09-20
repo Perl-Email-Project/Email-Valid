@@ -216,7 +216,10 @@ sub tld {
 
   my $host = $self->_host( $args{address} or return $self->details('tld') );
   my ($tld) = $host =~ m#\.(\w+)$#;
-  return Net::Domain::TLD::tld_exists($tld);
+
+  my %invalid_tlds = map { $_ => 1 } qw(invalid test example localhost);
+
+  return defined $invalid_tlds{$tld} ? 0 : Net::Domain::TLD::tld_exists($tld);
 }
 
 # Purpose: Check whether a DNS record (A or MX) exists for a domain.
@@ -499,21 +502,21 @@ This module determines whether an email address is well-formed, and
 optionally, whether a mail host exists for the domain.
 
 Please note that there is no way to determine whether an
-address is deliverable without attempting delivery (for details, see
-perlfaq 9).
+address is deliverable without attempting delivery
+(for details, see L<perlfaq 9|http://perldoc.perl.org/perlfaq9.html#How-do-I-check-a-valid-mail-address>).
 
 =head1 PREREQUISITES
 
-This module requires perl 5.004 or later and the Mail::Address module.
-Either the Net::DNS module or the nslookup utility is required
-for DNS checks.  The Net::Domain::TLD module is required to check the
+This module requires perl 5.004 or later and the L<Mail::Address> module.
+Either the L<Net::DNS> module or the nslookup utility is required
+for DNS checks.  The L<Net::Domain::TLD> module is required to check the
 validity of top level domains.
 
 =head1 METHODS
 
-  Every method which accepts an <ADDRESS> parameter may
-  be passed either a string or an instance of the Mail::Address
-  class.  All errors raise an exception.
+Every method which accepts an C<< <ADDRESS> >> parameter may
+be passed either a string or an instance of the Mail::Address
+class.  All errors raise an exception.
 
 =over 4
 
@@ -524,7 +527,7 @@ It accepts an optional list of named parameters to
 control the behavior of the object at instantiation.
 
 The following named parameters are allowed.  See the
-individual methods below of details.
+individual methods below for details.
 
  -mxcheck
  -tldcheck
@@ -544,8 +547,8 @@ Either the Net::DNS module or the nslookup utility is required for
 DNS checks.  Using Net::DNS is the preferred method since error
 handling is improved.  If Net::DNS is available, you can modify
 the behavior of the resolver (e.g. change the default tcp_timeout
-value) by manipulating the global Net::DNS::Resolver instance stored in
-$Email::Valid::Resolver.
+value) by manipulating the global L<Net::DNS::Resolver> instance stored in
+C<$Email::Valid::Resolver>.
 
 =item rfc822 ( <ADDRESS> )
 
@@ -572,7 +575,7 @@ The default is true.
 
 =item fqdn ( <TRUE>|<FALSE> )
 
-Species whether addresses passed to address() must contain a fully
+Specifies whether addresses passed to address() must contain a fully
 qualified domain name (FQDN).  The default is true.
 
 B<Please note!>  FQDN checks only occur for non-domain-literals.  In other
@@ -607,10 +610,10 @@ for a valid top level domains.  The default is false.
 =item address ( <ADDRESS> )
 
 This is the primary method which determines whether an email
-address is valid.  It's behavior is modified by the values of
+address is valid.  Its behavior is modified by the values of
 mxcheck(), tldcheck(), local_rules(), fqdn(), and fudge().  If the address
 passes all checks, the (possibly modified) address is returned as
-a string.  Otherwise, the undefined value is returned.
+a string.  Otherwise, undef is returned.
 In a list context, the method also returns an instance of the
 Mail::Address class representing the email address.
 
@@ -627,7 +630,7 @@ method to determine why it failed.  Possible values are:
  tldcheck
 
 If the class is not instantiated, you can get the same information
-from the global $Email::Valid::Details.
+from the global C<$Email::Valid::Details>.
 
 =back
 
@@ -691,5 +694,9 @@ bug fixes:
 =head1 SEE ALSO
 
 L<Mail::Address>, L<Net::DNS>, L<Net::Domain::TLD>, L<perlfaq9|https://metacpan.org/pod/distribution/perlfaq/lib/perlfaq9.pod>
+
+L<RFC822|https://www.ietf.org/rfc/rfc0822.txt> -
+standard for the format of ARPA internet text messages.
+Superseded by L<RFC2822|https://www.ietf.org/rfc/rfc2822.txt>.
 
 =cut

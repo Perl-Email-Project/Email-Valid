@@ -1,7 +1,7 @@
 #!perl
 use strict;
 
-use Test::More tests => 35;
+use Test::More tests => 39;
 
 BEGIN {
   use_ok('Email::Valid');
@@ -167,8 +167,9 @@ ok(
   'a domain literal address is not okay if we say -allow_ip=>0',
 );
 
+
 SKIP: {
-  skip "tests require Net::Domain::TLD 1.65", 4
+  skip "tests require Net::Domain::TLD 1.65", 8
     unless (eval {require Net::Domain::TLD;Net::Domain::TLD->VERSION(1.65);1});
 
   {
@@ -202,5 +203,25 @@ SKIP: {
       -address => q!foo@[1.2.3.4]!,
     ),
     "allow_ip + domain literal = no tldcheck",
+  );
+
+  ok(
+    ! $v->address( -address => '123@example.invalid', -tldcheck => 1),
+    '123@example.invalid is wrong as per IETF spec (invalid TLD)',
+  );
+
+  ok(
+    ! $v->address( -address => '123@example.test', -tldcheck => 1),
+    '123@example.test is wrong as per IETF spec (invalid TLD)',
+  );
+
+  ok(
+    ! $v->address( -address => '123@example.example', -tldcheck => 1),
+    '123@example.example is wrong as per IETF spec (invalid TLD)',
+  );
+
+  ok(
+    ! $v->address( -address => '123@example.localhost', -tldcheck => 1),
+    '123@example.localhost is wrong as per IETF spec (invalid TLD)',
   );
 }
