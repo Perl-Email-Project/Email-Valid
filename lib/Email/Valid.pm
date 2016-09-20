@@ -146,6 +146,7 @@ sub _net_dns_query {
 
   my @mx_entries = Net::DNS::mx($Resolver, $host);
 
+  # Check for valid MX records for $host
   if (@mx_entries) {
     foreach my $mx (@mx_entries) {
       my $mxhost = $mx->exchange;
@@ -157,6 +158,15 @@ sub _net_dns_query {
     }
   }
 
+  # Chceck for A record for $host
+  my @a_rrs = Net::DNS::rr($Resolver, $host, 'A');
+  if (@a_rrs) {
+    foreach my $a_rr (@a_rrs) {
+      return 1 unless $a_rr->type ne 'A';
+    }
+  }
+
+  # MX Check failed
   return $self->details('mx');
 }
 
