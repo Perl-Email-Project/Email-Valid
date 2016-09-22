@@ -1,6 +1,8 @@
 Revision history for Perl extension Email::Valid.
 
 {{$NEXT}}
+        - mx check once again allows for A records; a future check may
+          allow mx-only checks on purpose
 
 1.200     2016-03-27 17:36:57-04:00 America/New_York
         - skip more tests when Net::Domain::TLD not available, as required
