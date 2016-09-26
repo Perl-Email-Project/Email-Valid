@@ -2,6 +2,10 @@ Revision history for Perl extension Email::Valid.
 
 {{$NEXT}}
 
+1.202     2016-09-25 21:48:09-04:00 America/New_York
+        - avoid using a new Net::DNS feature, which should restore function
+          with old versions of Net::DNS
+
 1.201     2016-09-22 19:21:01-04:00 America/New_York
         - mx check once again allows for A records; a future check may
           allow mx-only checks on purpose
