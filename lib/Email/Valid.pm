@@ -158,8 +158,10 @@ sub _net_dns_query {
     }
   }
 
-  # Chceck for A record for $host
-  my @a_rrs = Net::DNS::rr($Resolver, $host, 'A');
+  # Check for A record for $host
+  my $ans   = $Resolver->query($host, 'A');
+  my @a_rrs = $ans ? $ans->answer : ();
+
   if (@a_rrs) {
     foreach my $a_rr (@a_rrs) {
       return 1 unless $a_rr->type ne 'A';
