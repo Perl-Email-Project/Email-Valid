@@ -22,7 +22,28 @@ for my $sub (
     $v->address( $sub->('123@example.com') ),
     '123@example.com',
   );
+
+
 }
+ok(
+  ! $v->address( -address => '123@example.invalid', -tldcheck => 1),
+  '123@example.invalid is wrong as per IETF spec (invalid TLD)',
+);
+
+ok(
+  ! $v->address( -address => '123@example.test', -tldcheck => 1),
+  '123@example.test is wrong as per IETF spec (invalid TLD)',
+);
+
+ok(
+  ! $v->address( -address => '123@example.example', -tldcheck => 1),
+  '123@example.example is wrong as per IETF spec (invalid TLD)',
+);
+
+ok(
+  ! $v->address( -address => '123@example.localhost', -tldcheck => 1),
+  '123@example.localhost is wrong as per IETF spec (invalid TLD)',
+);
 
 ok(
   $v->address( -address => 'Alfred Neuman <Neuman@BBN-TENEXA>', -fqdn    => 0),
