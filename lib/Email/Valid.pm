@@ -48,7 +48,7 @@ sub new {
   $class = ref $class || $class;
   bless my $self = {}, $class;
   $self->_initialize;
-  %$self = $self->_rearrange([ keys %AUTOLOAD ], \@_);
+  %$self = $self->_rearrange([], ref $_[0] eq 'HASH' ? $_[0] :  { @_ });
   return $self;
 }
 
@@ -63,32 +63,58 @@ sub _initialize {
   $self->{local_rules} = 0;
   $self->{localpart}   = 1;
   $self->{details}     = $Details = undef;
+
+  return $self;
+}
+
+our @ALLOWED_PARAMS = ( keys %AUTOLOAD, 'address' );
+
+sub _rearrange_named {
+  local $Carp::CarpLevel = 2;
+  my( $self, $args, @params )= @_;
+
+  while(@params) {
+    my $param = lc shift @params;
+    $param =~ s/^-//;
+
+    croak "argument '$param' not recognized"
+        unless grep { $_ eq $param } @ALLOWED_PARAMS;
+
+    $args->{ $param } = shift @params;
+  }
+
+  return %$args;
+}
+
+sub _rearrange_list {
+    local $Carp::CarpLevel = 2;
+    my( $self, $args, $names, $params ) = @_;
+
+    croak 'unexpected number of parameters' unless @$names >= @$params;
+
+    for my $param ( @$params ) {
+        $args->{shift @$names} = $param;
+    }
+
+    return %$args;
 }
 
 # Pupose: handles named parameter calling style
 sub _rearrange {
   my $self = shift;
-  my(@names)  = @{ shift() };
-  my(@params) = @{ shift() };
-  my(%args);
+  my ( $names, $params ) = @_;
 
-  ref $self ? %args = %$self : _initialize( \%args );
-  return %args unless @params;
+  my %args = ref $self ? %$self : %{ _initialize( {} ) };
 
-  unless (@params > 1 and $params[0] =~ /^-/) {
-    while(@params) {
-      croak 'unexpected number of parameters' unless @names;
-      $args{ lc shift @names } = shift @params;
-    }
-    return %args;
-  }
+  return %args unless $params;
 
-  while(@params) {
-    my $param = lc substr(shift @params, 1);
-    $args{ $param } = shift @params;
-  }
+  return $self->_rearrange_named(\%args,%$params)
+    if ref $params eq 'HASH';
 
-  %args;
+  return $self->_rearrange_named(\%args,@$params)
+    if @$params > 1 and $params->[0] =~ /^-/;
+
+  return $self->_rearrange_list(\%args,$names,$params);
 }
 
 # Purpose: determine why an address failed a check
@@ -539,12 +565,12 @@ control the behavior of the object at instantiation.
 The following named parameters are allowed.  See the
 individual methods below for details.
 
- -mxcheck
- -tldcheck
- -fudge
- -fqdn
- -allow_ip
- -local_rules
+ mxcheck
+ tldcheck
+ fudge
+ fqdn
+ allow_ip
+ local_rules
 
 =item mx ( <ADDRESS>|<DOMAIN> )
 
@@ -653,8 +679,8 @@ RFC822 specification:
 
 Additionally, let's make sure there's a mail host for it:
 
-  print (Email::Valid->address( -address => 'maurice@hevanet.com',
-                                -mxcheck => 1 ) ? 'yes' : 'no');
+  print (Email::Valid->address( address => 'maurice@hevanet.com',
+                                mxcheck => 1 ) ? 'yes' : 'no');
 
 Let's see an example of how the address may be modified:
 
@@ -663,8 +689,8 @@ Let's see an example of how the address may be modified:
 
 Now let's add the check for top level domains:
 
-  $addr = Email::Valid->address( -address => 'Neuman@foo.bar',
-                                 -tldcheck => 1 );
+  $addr = Email::Valid->address( address => 'Neuman@foo.bar',
+                                 tldcheck => 1 );
   print "$addr\n"; # doesn't print anything
 
 Need to determine why an address failed?
@@ -678,8 +704,8 @@ only possible when performing DNS queries.  Trap any exceptions by
 wrapping the call in an eval block:
 
   eval {
-    $addr = Email::Valid->address( -address => 'maurice@hevanet.com',
-                                   -mxcheck => 1 );
+    $addr = Email::Valid->address( address => 'maurice@hevanet.com',
+                                   mxcheck => 1 );
   };
   warn "an error was encountered: $@" if $@;
 
