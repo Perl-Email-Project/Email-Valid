@@ -7,7 +7,7 @@ use ExtUtils::MakeMaker;
 use File::Spec;
 
 # We want it if we already have it.  That way we skip the block below.
-my $need_net_dns = 1 if eval "require Net::DNS; 1;";
+my $need_net_dns = !! eval { require Net::DNS; 1; };
 
 unless ($need_net_dns) {
   my $found_it;
