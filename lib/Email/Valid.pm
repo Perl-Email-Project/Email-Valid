@@ -148,6 +148,11 @@ sub _net_dns_query {
 
   # Check for valid MX records for $host
   if (@mx_entries) {
+    # Check for RFC-7505 Null MX
+    my $nmx = scalar @mx_entries;
+    if ($nmx == 1 && length(@mx_entries[0]->exchange) == 0) {
+      return $self->details('mx');
+    }
     foreach my $mx (@mx_entries) {
       my $mxhost = $mx->exchange;
       my $query  = $Resolver->search($mxhost);
