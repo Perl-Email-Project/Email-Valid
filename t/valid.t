@@ -1,7 +1,7 @@
 #!perl
 use strict;
 
-use Test::More tests => 39;
+use Test::More tests => 40;
 
 BEGIN {
   use_ok('Email::Valid');
@@ -148,12 +148,17 @@ SKIP: {
   ) or diag "was using $Email::Valid::DNS_Method for dns resolution";
 
 
-  skip "can't deal with null mx without Net::DNS", 1
+  skip "can't deal with mx without Net::DNS", 1
     unless $Email::Valid::DNS_Method eq 'Net::DNS';
 
   ok(
     !$v->address(-address => 'blort@no-mx-exists.manxome.org', -mxcheck => 1),
-    'no-mx-exists.manxome.org has a null mx record',
+    'no-mx-exists.manxome.org has no mx records',
+  ) or diag "was using $Email::Valid::DNS_Method for dns resolution";
+
+  ok(
+    !$v->address(-address => 'blort@nomail.digilicious.com', -mxcheck => 1),
+    'nomail.digilicious.com has RFC-7505 Null MX record',
   ) or diag "was using $Email::Valid::DNS_Method for dns resolution";
 }
 
