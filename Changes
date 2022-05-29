@@ -1,6 +1,8 @@
 Revision history for Perl extension Email::Valid.
 
 {{$NEXT}}
+        - tiny packaging improvements
+        - detect published null MX records (thanks, Gene Hightower)
 
 1.202     2016-09-25 21:48:09-04:00 America/New_York
         - avoid using a new Net::DNS feature, which should restore function
