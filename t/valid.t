@@ -148,7 +148,7 @@ SKIP: {
   ) or diag "was using $Email::Valid::DNS_Method for dns resolution";
 
 
-  skip "can't deal with mx without Net::DNS", 1
+  skip "can't deal with mx without Net::DNS", 2
     unless $Email::Valid::DNS_Method eq 'Net::DNS';
 
   ok(
