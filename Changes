@@ -1,6 +1,8 @@
 Revision history for Perl extension Email::Valid.
 
 {{$NEXT}}
+
+1.203     2022-05-29 15:22:36-04:00 America/New_York
         - tiny packaging improvements
         - detect published null MX records (thanks, Gene Hightower)
 
