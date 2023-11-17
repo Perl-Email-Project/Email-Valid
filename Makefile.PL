@@ -30,7 +30,7 @@ WriteMakefile(
       'Scalar::Util'  => 0, # for blessed()
       ($need_net_dns ? ('Net::DNS' => 0) : ()),
       ((!$need_net_dns and $^O =~ /\AMSWin32|Cygwin\z/)
-        ? ('IO::CaptureOutput' => 0)
+        ? ('Capture::Tiny' => 0)
         : ()
       ),
     },
