@@ -194,10 +194,10 @@ sub _nslookup_query {
   # Check for an MX record
   if ($^O eq 'MSWin32' or $^O eq 'Cygwin') {
     # Oh no, we're on Windows!
-    require IO::CaptureOutput;
-    my $response = IO::CaptureOutput::capture_exec(
+    require Capture::Tiny;
+    my $response = Capture::Tiny::capture_stdout {
      $Nslookup_Path, '-query=mx', $host
-    );
+    };
     croak "unable to execute nslookup '$Nslookup_Path': exit $?" if $?;
     print STDERR $response if $Debug;
     $response =~ /$NSLOOKUP_PAT/io or return $self->details('mx');
