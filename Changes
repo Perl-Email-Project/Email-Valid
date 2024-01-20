@@ -1,6 +1,8 @@
 Revision history for Perl extension Email::Valid.
 
 {{$NEXT}}
+
+1.204     2024-01-20 16:40:53-05:00 America/New_York
         - replace IO::CaptureOutput with Capture::Tiny (thanks, Jim Keenan)
         - fix detection of null MX (thanks, Arne Johannessen)
 
